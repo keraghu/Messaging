@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+ http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.0.xsd
+http://cxf.apache.org/jaxrs
+http://cxf.apache.org/schemas/jaxrs.xsd
+http://cxf.apache.org/jaxws
+http://cxf.apache.org/schemas/jaxws.xsd">
+<import resource="classpath:META-INF/cxf/cxf.xml" />
+<context:component-scan base-package="com.cts.service"/>
+<!--
+    <bean id="uaaserviceclass" class="com.xerox.enterprise.mmis.member.resources.MemberResource"/>
+     <jaxrs:server id="memberservice" address="/member">  
+   <bean id="loginservice" class="com.cts.login.services.LoginService"/>
+    <jaxrs:server id="login" address="/login">
+     <jaxrs:serviceBeans>
+	    <ref bean="loginservice" />
+     </jaxrs:serviceBeans> -->
+     
+    <bean id="messageservice" class="com.cts.service.MessagingService"/>
+    <jaxrs:server id="messaging" address="/service">
+     <jaxrs:serviceBeans>
+	    <ref bean="messageservice" />
+     </jaxrs:serviceBeans>
+
+  <jaxrs:providers>
+           <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+           <bean class="org.apache.cxf.jaxrs.provider.JAXBElementProvider"/>
+   </jaxrs:providers>
+
+   <jaxrs:extensionMappings>
+    <entry key="xml" value="application/xml" />
+    <entry key="json" value="application/json" />
+ </jaxrs:extensionMappings>
+    </jaxrs:server>
+</beans>
